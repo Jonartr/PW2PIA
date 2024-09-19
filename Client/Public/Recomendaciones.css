@@ -1,0 +1,10 @@
+.bg-header {
+    background-image: url('img/2.webp'); /* Ruta a tu imagen */
+    background-size: cover; /* Ajusta el tamaño para que cubra todo el header */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    height: 100vh; /* Puedes ajustar la altura del header según tu diseño */
+    max-height: 400px; /* Máxima altura permitida */
+    min-height: 200px; /* Mínima altura para el header */
+    color:black;
+}
