@@ -57,7 +57,7 @@ app.post('/register', async (req, res) => {
   //  const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ username, password: password });
     await newUser.save();
-    res.status(201).send('Usuario registrado');
+    res.sendFile(path.join(__dirname, '../Client/Public/Home.html'));
 });
 
 app.post('/login', async (req, res) => {
@@ -80,58 +80,3 @@ app.listen(PORT, () => {
 });
 
 
-// const express = require('express');
-// const bodyParser = require('body-parser');
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
-
-// const app = express();
-// const PORT = process.env.PORT || 3000;
-
-// // Middleware
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-
-// // Almacenamiento en memoria
-// const users = [];
-
-// // Página principal
-// app.get('/', (req, res) => {
-//     res.send('<h1>Bienvenido a la aplicación de Login y Registro</h1><p><a href="/login">Login</a> | <a href="/register">Registro</a></p>');
-// });
-
-// // Servir las vistas
-// app.get('/login', (req, res) => {
-//     res.sendFile(__dirname + '/Views/Login.html');
-// });
-
-// app.get('/register', (req, res) => {
-//     res.sendFile(__dirname + '/Views/Registro.html');
-// });
-
-// // Rutas
-// app.post('/register', async (req, res) => {
-//     const { username, password } = req.body;
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     users.push({ username, password: hashedPassword });
-//     res.status(201).send('Usuario registrado');
-// });
-
-// app.post('/login', async (req, res) => {
-//     const { username, password } = req.body;
-//     const user = users.find(u => u.username === username);
-//     if (!user) {
-//         return res.status(400).send('Usuario no encontrado');
-//     }
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) {
-//         return res.status(400).send('Contraseña incorrecta');
-//     }
-//     const token = jwt.sign({ username: user.username }, 'secretkey', { expiresIn: '1h' });
-//     res.status(200).json({ token });
-// });
-
-// // Iniciar el servidor
-// app.listen(PORT, () => {
-//     console.log(`Servidor corriendo en el puerto http://localhost:${PORT}`);
-// });
