@@ -35,7 +35,7 @@ const User = mongoose.model('Si', UserSchema);
 
 // Página principal
 app.get('/', (req, res) => {
-    res.send('<h1>Bienvenido a la aplicación de Login y Registro</h1><p><a href="/login">Login</a> | <a href="/register">Registro</a></p>');
+    res.sendFile(path.join(__dirname, '../Client/Public/Home.html'));
 });
 
 // Servir las vistas
