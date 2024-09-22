@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Client/Public/Home.html'));
+    res.sendFile(path.join(__dirname, '../Client/Public/Inicio.html'));
 });
 
 // Servir las vistas
