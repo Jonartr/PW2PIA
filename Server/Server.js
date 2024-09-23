@@ -26,7 +26,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/PW2', {
 // Modelo de Usuario
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    email: {type: String, required:true},
+    password: { type: String, required: true },
 });
 
 const User = mongoose.model('Si', UserSchema);
@@ -47,17 +48,26 @@ app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, '../Client/Public/Registro.html'));
 });
 
+app.get('/recomended', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Client/Public/Recomendaciones.html'));
+});
+
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Client/Public/About.html'));
+});
+
+
 
 app.post('/register', async (req, res) => {
-    const { username, password } = req.body;
+    const { username,email, password, confirm_password } = req.body;
+
     const existingUser = await User.findOne({ username });
     if (existingUser) {
         return res.status(400).send('El nombre de usuario ya está en uso');
     }
-  //  const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ username, password: password });
+    const newUser = new User({ username, email ,password: password });
     await newUser.save();
-    res.sendFile(path.join(__dirname, '../Client/Public/Home.html'));
+    res.sendFile(path.join(__dirname, '../Client/Public/Inicio.html'));
 });
 
 app.post('/login', async (req, res) => {
