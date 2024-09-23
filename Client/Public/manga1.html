@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reseña de Manga</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .star-rating {
+            font-size: 1.5rem;
+            color: gold;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            cursor: pointer;
+        }
+
+        .star-rating input:checked ~ label {
+            color: gold;
+        }
+
+        .comments-section {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="Inicio.html">CriticManga</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="Inicio.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Nuevos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="recomendaciones.html">Destacados</a>
+                    </li>
+                    <li class="nav-item"></li>
+                    <a class="nav-link active" aria-current="page" href="#">Próximos Lanzamientos</a>
+                    </li>
+                    <li class="nav-item"></li>
+                    <a class="nav-link active" aria-current="page" href="About.html">Acerca De</a>
+                    </li>
+                    <li class="nav-item"></li>
+                    <a class="nav-link" href="Login.html">Login</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección de descripción del manga -->
+    <section class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="mb-3">Manga: "La Odisea de Ayase"</h1>
+                <p>En este nuevo manga, seguimos las aventuras de Ayase, una joven con el poder de comunicarse con espíritus. A lo largo de su travesía, deberá enfrentarse a temibles criaturas sobrenaturales y descubrir los secretos ocultos de su propio pasado.</p>
+                <p>Con arte impresionante y una narrativa que combina suspenso, horror y momentos emotivos, "La Odisea de Ayase" ha capturado el corazón de los fans en todo el mundo.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="img/manga-cover.jpg" alt="Portada del manga" class="img-fluid mb-3">
+                <img src="img/manga-reference1.jpg" alt="Escena del manga" class="img-fluid mb-3">
+                <img src="img/manga-reference2.jpg" alt="Ayase y su grupo" class="img-fluid">
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de críticas -->
+    <section class="container mt-5">
+        <h2 class="mb-4">Críticas</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p>"La Odisea de Ayase tiene una historia intrigante y un desarrollo de personajes increíble. Las escenas de acción son intensas y bien ilustradas. ¡Impresionante!"</p>
+                    <footer class="blockquote-footer">Juan Pérez</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p>"La mezcla de horror y aventuras emocionales es adictiva. El personaje principal, Ayase, es tanto vulnerable como fuerte, lo que hace que cada capítulo sea inolvidable."</p>
+                    <footer class="blockquote-footer">Carla López</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p>"El arte es hermoso y la historia te mantiene en el borde del asiento. No puedo esperar para ver qué pasa en el próximo tomo."</p>
+                    <footer class="blockquote-footer">Sergio Ruiz</footer>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sistema de ranking con estrellas -->
+    <section class="container mt-5">
+        <h2 class="mb-4">Calificación del Manga</h2>
+        <div class="star-rating">
+            <input type="radio" id="5-stars" name="rating" value="5">
+            <label for="5-stars" class="me-2">★</label>
+            <input type="radio" id="4-stars" name="rating" value="4">
+            <label for="4-stars" class="me-2">★</label>
+            <input type="radio" id="3-stars" name="rating" value="3">
+            <label for="3-stars" class="me-2">★</label>
+            <input type="radio" id="2-stars" name="rating" value="2">
+            <label for="2-stars" class="me-2">★</label>
+            <input type="radio" id="1-star" name="rating" value="1">
+            <label for="1-star" class="me-2">★</label>
+        </div>
+    </section>
+
+    <!-- Sección de comentarios -->
+    <section class="container comments-section mt-5">
+        <h2 class="mb-4">Deja tu Comentario</h2>
+        <form>
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
+            </div>
+            <div class="mb-3">
+                <label for="comentario" class="form-label">Comentario</label>
+                <textarea class="form-control" id="comentario" rows="4" placeholder="Escribe tu opinión"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p>&copy; 2024 Mi Empresa. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

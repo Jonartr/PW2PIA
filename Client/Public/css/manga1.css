@@ -1,0 +1,112 @@
+/* Estilos para el contenedor principal */
+.container {
+    margin-top: 20px;
+}
+
+/* Estilos de la barra de navegación */
+.navbar {
+    margin-bottom: 20px;
+}
+
+/* Estilos para la sección de descripción del manga */
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Estilos para la sección de críticas */
+.blockquote {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-left: 5px solid #343a40;
+    border-radius: 10px;
+}
+
+.blockquote-footer {
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* Estilos del sistema de ranking por estrellas */
+.star-rating {
+    font-size: 2rem;
+    color: #ddd;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    color: gold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.star-rating input:checked ~ label {
+    color: #ffdf00;
+}
+
+.star-rating input:checked ~ label:hover {
+    color: #ffc107;
+}
+
+/* Estilos para los comentarios */
+.comments-section {
+    margin-top: 50px;
+}
+
+.comments-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.comments-section .form-control {
+    margin-bottom: 1rem;
+}
+
+.comments-section button {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.comments-section button:hover {
+    background-color: #495057;
+}
+
+/* Estilos del footer */
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    .star-rating {
+        font-size: 1.5rem;
+    }
+}
