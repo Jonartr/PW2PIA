@@ -49,7 +49,10 @@
        </li>
 
        <li class="nav-item"></li>
-        <a class="nav-link" href="/login">Login</a>
+        <a class="nav-link" id = "login-link" href="/login">Login</a>
+      </li>
+      <li class="nav-item"></li>
+        <a class="nav-link" href="#" id="logout-link" style="display: none;">Cerrar sesión</a>
       </li>
       </ul>
 
@@ -184,6 +187,27 @@
     <p>&copy; 2024 Mi Empresa. Todos los derechos reservados.</p>
 </footer>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const username = payload.loggeduser;
+      console.log(username);
+      document.getElementById('login-link').textContent = username;
+      document.getElementById('login-link').href = '#'; // Opcional: deshabilitar el enlace
+      document.getElementById('logout-link').style.display = 'inline'; // Mostrar el enlace de "Cerrar sesión"
+    } else {
+      document.getElementById('login-link').textContent = 'Login';
+    }
+  });
+
+  document.getElementById('logout-link').addEventListener('click', function(event) {
+    event.preventDefault();
+    localStorage.removeItem('token');
+    window.location.href = '/Inicio.html';
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

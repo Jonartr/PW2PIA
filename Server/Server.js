@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-//const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 
@@ -12,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../client/public')));
+
 
 // Conectar a la base de datos MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/PW2', {
@@ -63,24 +63,47 @@ app.post('/register', async (req, res) => {
 
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-        return res.status(400).send('El nombre de usuario ya está en uso');
+        return res.status(400).json({ message: 'El nombre de usuario ya está en uso' })
+       //document.getElementById('error-message').textContent = "El nombre de usuario ya está en uso";
     }
-    const newUser = new User({ username, email ,password: password });
-    await newUser.save();
-    res.sendFile(path.join(__dirname, '../Client/Public/Inicio.html'));
+    else{
+
+        var usernameRegex = new RegExp("[a-zA-Z0-9]{3,}");
+        var passwordRegex = new RegExp("(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}");
+
+        if(usernameRegex.test(username.value) && username.value != null){
+
+            if(passwordRegex.test(password) && password === confirm_password){
+                const newUser = new User({ username, email ,password: password });
+                await newUser.save();
+                alert("Usuario registrado correctamente.");
+                res.sendFile(path.join(__dirname, '../Client/Public/Inicio.html'));
+            }
+            else{
+                return res.status(400).json({ message: 'La contraseña debe tener minimo 8 caracteres, 1 letra mayuscula, y letra miniscula, 1 numero y un caracter especial.' });
+            }
+
+           
+        }
+        else{
+            return res.status(400).json({ message: 'Nombre solo deben de ser letras y minimo 3 caracteres.' });
+        }
+
+      
+    }
+ 
 });
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username, password });
     if (!user) {
-        return res.status(400).send('Usuario no encontrado');
+        return res.status(400).json({ message: 'Usuario y/o contraseña incorrectos, revise nuevamente' });
     }
-    // const isMatch = await bcrypt.compare(password, user.password);
-    // if (!isMatch) {
-    //     return res.status(400).send('Contraseña incorrecta');
-    // }
-    const token = jwt.sign({ id: user._id }, 'secretkey', { expiresIn: '1h' });
+    const token = jwt.sign({ loggeduser: user.username }, 'secretkey', { expiresIn: '1h' });
+
+    console.log('Generated Token:', token); // Verificar el token en el servidor
+  
     res.status(200).json({ token });
 });
 
