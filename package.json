@@ -1,0 +1,49 @@
+{
+  "name": "plantilla",
+  "version": "1.0.0",
+  "description": "Plantilla para PrograWeb 2",
+  "homepage": "CritManga",
+  "main": "index.js",
+  "scripts": {
+    "servnode": "node index.js",
+    "servexp": "node indexexpress.js",
+    "expressWS": "node ./Back-end/MySQLConn.js",
+    "expressMDB": "node ./Back-end/MongoDBConn.js",
+    "start": "react-scripts --max-http-header-size=4096 start "
+  },
+  "keywords": [
+    "nodejs",
+    "Express"
+  ],
+  "author": "Aula 205",
+  "license": "ISC",
+  "dependencies": {
+    "app-router": "^0.1.3",
+    "axios": "^1.7.7",
+    "body-parser": "^1.20.3",
+    "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.1",
+    "mysql": "^2.18.1",
+    "next": "^14.2.13",
+    "react": "^18.3.1",
+    "react-app-rewired": "^2.2.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.1",
+    "react-scripts": "^5.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
