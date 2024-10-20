@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const userRoutes = require("./userRoutes");
 
 const app = express();
 const PORT =  3000;
 
 // Middleware
 app.use(bodyParser.json());
-
+app.use(express.json({ limit: '50mb' }));
 // Conectar a la base de datos MongoDB
 mongoose.connect('mongodb://localhost:27017/PW2', {
   useNewUrlParser: true,
@@ -26,39 +27,26 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model('Si', UserSchema);
+
+
+
+
+
 // Rutas
 
 //Página principal
-app.get('/', async (req, res) => {
-    try {
-        const users = await User.find({}).exec();
-        res.send(users);
-    } catch (error) {
-        console.error('Error al obtener los usuarios', error);
-        res.status(500).send('Error al obtener los usuarios');
-    }
-});
-
-
-
-// // Servir las vistas
-// app.get('/login', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../Client/Public/Login.html'));
-// });
-
-// app.get('/register', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../Client/Public/Registro.html'));
-// });
-
-// app.get('/recomended', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../Client/Public/Recomendaciones.html'));
-// });
-
-// app.get('/about', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../Client/Public/About.html'));
+// app.get('/hi', async (req, res) => {
+//     try {
+//         const users = await User.find({}).exec();
+//         res.send(users);
+//     } catch (error) {
+//         console.error('Error al obtener los usuarios', error);
+//         res.status(500).send('Error al obtener los usuarios');
+//     }
 // });
 
 
+app.use("/api/users", userRoutes);
 
 // app.post('/register', async (req, res) => {
 //     const { username,email, password, confirm_password } = req.body;
@@ -96,33 +84,35 @@ app.get('/', async (req, res) => {
  
 // });
 
-app.get('/Si', async (req, res) => {
-    try {
-      const users = await User.find();
-      res.json(users);
-    } catch (error) {
-      console.error('Error fetching users:', error);
-      res.status(500).send('Error fetching users');
-    }
-  });
+// app.get('/api/users', async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     res.send(users);
+//   } catch (error) {
+//     console.error('Error fetching users:', error);
+//     res.status(500).send('Error fetching users');
+//   }
+// });
   
+// app.get('/api/hola',async(req,res)=>{
+//   res.json({ message: 'Hola Mundo' });
+// })
 
-app.post('/users', async (req, res) => {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username, password });
-    if (!user) {
-        return res.status(400).json({ message: 'Usuario y/o contraseña incorrectos, revise nuevamente' });
-    }
-    const token = jwt.sign({ loggeduser: user.username }, 'secretkey', { expiresIn: '1h' });
+// app.post('/users', async (req, res) => {
+//     const { username, password } = req.body;
+//     const user = await User.findOne({ username, password });
+//     if (!user) {
+//         return res.status(400).json({ message: 'Usuario y/o contraseña incorrectos, revise nuevamente' });
+//     }
+//     const token = jwt.sign({ loggeduser: user.username }, 'secretkey', { expiresIn: '1h' });
 
-    console.log('Generated Token:', token); // Verificar el token en el servidor
+//     console.log('Generated Token:', token); // Verificar el token en el servidor
   
-    res.status(200).json({ token });
-});
+//     res.status(200).json({ token });
+// });
 
 // Iniciar el servidor
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto http://127.0.0.1:${PORT}`);
+    console.log(`Servidor corriendo en el puerto http://localhost:${PORT}`);
 });
-
 

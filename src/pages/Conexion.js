@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 
 const MyComponent = () => {
   const [data, setData] = useState(null);
-
-  const url = "http://localhost:3000/users"; // Asegúrate de que este URL sea correcto en tu entorno
+  const url = "/api/users/hola";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/Si');
-        setData(response.data);
+        const response = await Axios.get(url);
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        setData(result);
       } catch (error) {
         console.error("Error fetching data", error);
       }
     };
+
     fetchData();
   }, []);
 
@@ -25,11 +31,7 @@ const MyComponent = () => {
       </h2>
       <br />
       {data ? (
-        data.map((user, index) => (
-          <p key={index}>
-            {user.username} - {user.email}
-          </p>
-        ))
+        <p>{data.message}</p>
       ) : (
         <p>Loading data...</p>
       )}

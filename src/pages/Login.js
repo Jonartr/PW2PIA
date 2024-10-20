@@ -1,28 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom';
 import Image from './img/Ayato.png'
-import React, { useState } from 'react';
-import axios from 'axios';
+import Formlogin from '../Utils/Formlogin';
 
 const Login  = () => {
-
-    const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    
-    try {
-        const response = await axios.post('/users', { username, password });
-        if (response.data.success) {
-            
-        } else {
-        }
-      } catch (error) {
-        console.error('Error al iniciar sesión:', error);
-      }
-  };
-
     return (
        
 <section className="bg-primary py-3 py-md-5 py-xl-8">
@@ -76,48 +56,7 @@ const Login  = () => {
                 </div>
               </div>
             </div>
-            <form onSubmit={handleLogin} id="loginForm">
-              <div className="row gy-3 overflow-hidden">
-                <div className="col-12">
-                  <div className="form-floating mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="username"
-                      id="username"
-                      placeholder="name@example.com"
-                      required=""
-                    />
-                    <label htmlFor="text" className="form-label">
-                      Correo electrónico/Usuario
-                    </label>
-                  </div>
-                </div>
-                <div className="col-12">
-                  <div className="form-floating mb-3">
-                    <input
-                      type="password"
-                      className="form-control"
-                      name="password"
-                      id="password"
-                      defaultValue=""
-                      placeholder="Password"
-                      required=""
-                    />
-                    <label htmlFor="password" className="form-label">
-                      Contraseña
-                    </label>
-                  </div>
-                </div>
-                <div className="col-12">
-                  <div className="d-grid">
-                    <button className="btn btn-primary btn-lg" type="submit">
-                      Entrar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
+            <Formlogin></Formlogin>
             <div className="row">
               <div className="col-12">
                 <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end mt-4">
