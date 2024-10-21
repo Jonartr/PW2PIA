@@ -16,13 +16,13 @@ const Navbar = () => {
                 <Link className="nav-link" to="/">Inicio</Link>
             </li>
             <li className="nav-item">
-            <Link className="nav-link" to="/New">Nuevos</Link>
+             <Link className="nav-link" to="/New">Nuevos</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" >Destacados</a>
+              <Link className="nav-link" to="/Outstanding">Destacados</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page">Próximos Lanzamientos</a>
+              <Link className="nav-link" to="/Incoming">Proximos lanzamientos</Link>
             </li>
             <li className="nav-item">
               <a className="nav-link active" aria-current="page">Acerca De</a>

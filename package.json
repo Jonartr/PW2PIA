@@ -8,7 +8,8 @@
     "servexp": "node indexexpress.js",
     "mysql": "node ./Back-end/MySQLConn.js",
     "expressMDB": "node ./Back-end/MongoDBConn.js",
-    "start": " react-scripts start"
+    "start": "react-scripts --max-http-header-size=102400 start"
+
   },
   "keywords": [
     "nodejs",

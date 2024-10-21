@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Image from './img/Ayato.png'
-import Formlogin from '../Utils/Formlogin';
+import Image from '../img/Ayato.png'
+import Formlogin from '../Components/Formlogin';
 
 const Login  = () => {
     return (

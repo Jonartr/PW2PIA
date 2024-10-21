@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Image from './img/Hinata.png'
+import Image from '../img/Hinata.png'
 
 const Register = () => {
 

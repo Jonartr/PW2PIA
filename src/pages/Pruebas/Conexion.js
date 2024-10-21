@@ -3,7 +3,7 @@ import Axios from 'axios';
 
 const MyComponent = () => {
   const [data, setData] = useState(null);
-  const url = "/api/users/hola";
+  const url = "http://localhost:3000/api/users/hola";
 
   useEffect(() => {
     const fetchData = async () => {
