@@ -28,8 +28,9 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model('Si', UserSchema);
 
-app.use("/api/users", userRoutes);
-
+app.get('/api/hola',async(req,res)=>{
+  res.json({ message: 'Hola Mundo' });
+})
 
 // Iniciar el servidor
 app.listen(PORT, () => {
