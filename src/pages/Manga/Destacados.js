@@ -5,7 +5,7 @@ const Destacados = () =>{
 return(
 <>
   <div className="container">
-    <h1>Lo más nuevo.</h1>
+    <h1>Lo más destacado.</h1>
     <div className="row">
       <div className="col-md-4">
         <div className="card mb-4">

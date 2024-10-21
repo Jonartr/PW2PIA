@@ -5,7 +5,7 @@ const Incoming = () =>{
 return(
 <>
   <div className="container">
-    <h1>Lo más nuevo.</h1>
+    <h1>Proximamente.</h1>
     <div className="row">
       <div className="col-md-4">
         <div className="card mb-4">
@@ -20,15 +20,8 @@ return(
             />
             <h5 className="card-title">Mieruko Chan</h5>
             <p className="card-text">Género: Terror, Comedia.</p>
-            <p className="card-text">
-              Descripción: Miko es una estudiante común, 
-              pero su vida cambia drásticamente por un suceso terrible e inesperado: 
-              ¡de pronto comienza a ver espectros espantosos en todas partes! 
-              Y aunque muere de horror cada vez que sucede, 
-              decide fingir que no los percibe porque teme que la lastimen si se percatan de que puede verlos. 
-              ¡Acompáñala en sus intentos de vivir como una chica normal!
-            </p>
-            <p className="card-text">Fecha de publicacion: 2 de noviembre de 2018 </p>
+       
+            <p className="card-text">Fecha de estreno: 22 de octubre de 2024 </p>
           </div>
         </div>
       </div>
