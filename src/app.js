@@ -26,7 +26,7 @@ return (
     {/* Otras rutas aquí */}
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
-    <Route path="/Conexion" element={<MyComponent />} />
+    <Route path="/Conexion" element={<MyComponent />} />x
     <Route path="/New" element = {<Nuevo/>}/>
     <Route path="/Outstanding" element = {<Destacados/>}/>
     <Route path="/Incoming" element = {<Incoming/>}/>

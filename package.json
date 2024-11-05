@@ -9,7 +9,6 @@
     "mysql": "node ./Back-end/MySQLConn.js",
     "expressMDB": "node ./Back-end/MongoDBConn.js",
     "start": "react-scripts start"
-
   },
   "keywords": [
     "nodejs",

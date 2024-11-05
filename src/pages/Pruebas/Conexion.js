@@ -3,19 +3,24 @@ import Axios from 'axios';
 
 const MyComponent = () => {
   const [data, setData] = useState(null);
-  const url = "http://localhost:3000/api/users/hola";
+  const url = "http://localhost:3001/api/hola";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await Axios.get(url);
+        console.log(response.data);
+        const info = JSON.stringify(response.data);
+        console.log(info);
 
-        if (!response.ok) {
+        if (info.ok == 'fail') {
           throw new Error('Network response was not ok');
         }
+        else{
+          setData(info);
+        }
 
-        const result = await response.json();
-        setData(result);
+
       } catch (error) {
         console.error("Error fetching data", error);
       }
