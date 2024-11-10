@@ -1,16 +1,32 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-var cors = require("cors")
+const cors = require("cors")
+const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const path = require('path');
 
 const app = express();
 const PORT =  3001;
+
+
+const storage = multer.diskStorage({
+destination:(req, file, cb) =>{
+   cb(null,'Back-end/images');
+},
+filename:(req, file, cb)=>{
+  cb(null,`image-${Date.now()}.${file.originalname}`);
+}
+
+});
+const upload = multer({ storage });
 
 // Middleware
 app.use(cors())
 app.use(bodyParser.json());
 app.use(express.json({ limit: '100mb' }));
-// Conectar a la base de datos MongoDB
+app.use(express.urlencoded({ extended: true })); 
+app.use('./Back-end/images', express.static('./Back-end/images'));
 mongoose.connect('mongodb://localhost:27017/PW2', {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -25,51 +41,48 @@ const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  profilePhoto: {type: String,default: null},
 });
 
 const User = mongoose.model('Si', UserSchema);
 
-app.get('/api/hola',async(req,res)=>{
-  // console.log(res);
-  res.json({ message: 'Hola Mundo', status: 'OK' });
-  // console.log(res);
+app.get('/',async(req,res)=>{
+
+  
 })
 
-app.post('/register', async (req, res) => {
-    const { username,email, password, confirm_password } = req.body;
 
+app.post('/register', upload.single('profile_photo'),async (req, res) => {
+    const { username, email, password, confirm_password } = req.body;
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-        return res.status(400).json({ message: 'El nombre de usuario ya está en uso' })
-       //document.getElementById('error-message').textContent = "El nombre de usuario ya está en uso";
-    }
-    else{
+        return res.status(400).json({ message: 'El nombre de usuario ya está en uso' });
+    } else {
+        const usernameRegex = /^[a-zA-Z0-9]{3,}$/;
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
 
-        var usernameRegex = new RegExp("[a-zA-Z0-9]{3,}");
-        var passwordRegex = new RegExp("(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}");
-
-        if(usernameRegex.test(username.value) && username.value != null){
-
-            if(passwordRegex.test(password) && password === confirm_password){
-                const newUser = new User({ username, email ,password: password });
+        if (usernameRegex.test(username)) {
+            if (passwordRegex.test(password) && password === confirm_password) {
+              //  const hashedPassword = await bcrypt.hash(password, 10);
+                const newUser = new User({ username, email, password: password, profilePhoto: req.file ? `Back-end/images/${req.file.filename}` : null });
+                console.log(newUser);
                 await newUser.save();
-                alert("Usuario registrado correctamente.");
-                res.sendFile(path.join(__dirname, '../Client/Public/Inicio.html'));
+                return res.status(201).json({ message: 'Usuario registrado correctamente', status: true });
+            } else {
+                return res.status(400).json({
+                    message: 'La contraseña debe tener mínimo 8 caracteres, 1 letra mayúscula, 1 letra minúscula, 1 número y 1 carácter especial.',
+                    status: false
+                });
             }
-            else{
-                return res.status(400).json({ message: 'La contraseña debe tener minimo 8 caracteres, 1 letra mayuscula, y letra miniscula, 1 numero y un caracter especial.' });
-            }
-
-           
+        } else {
+            return res.status(400).json({
+                message: 'El nombre de usuario solo debe contener letras y números y tener al menos 3 caracteres.',
+                status: false
+            });
         }
-        else{
-            return res.status(400).json({ message: 'Nombre solo deben de ser letras y minimo 3 caracteres.' });
-        }
-
-      
     }
- 
 });
+
 
 app.get('/api/users', async (req, res) => {
   try {
@@ -87,15 +100,12 @@ app.get('/api/users/hola',async(req,res)=>{
 
 app.post('/users', async (req, res) => {
     const { username, password } = req.body;
-    const user = await User.findOne({ username, password });
+    const user = await User.findOne({ username, password});
     if (!user) {
         return res.status(400).json({ message: 'Usuario y/o contraseña incorrectos, revise nuevamente' });
     }
-    const token = jwt.sign({ loggeduser: user.username }, 'secretkey', { expiresIn: '1h' });
-
-    console.log('Generated Token:', token); // Verificar el token en el servidor
-  
-    res.status(200).json({ token });
+   
+    res.status(200).json({ username:user.username, profilePhoto: user.profilePhoto });
 });
 
 // Iniciar el servidor

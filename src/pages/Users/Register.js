@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from '../img/Hinata.png'
+import Formregister from '../Components/Formregister';
 
 const Register = () => {
 
@@ -50,102 +51,11 @@ return(
                     <p>
                       Ya tienes una cuenta? <a href="Login.html">Inicia sesión</a>
                     </p>
+                    <Formregister></Formregister>
                   </div>
                 </div>
               </div>
-              <form action="/register" method="POST">
-                <div className="row gy-3 overflow-hidden">
-                  <div className="col-12">
-                    <div className="form-floating mb-3">
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="username"
-                        id="username"
-                        placeholder="Nombre de usuario"
-                        required=""
-                      />
-                      <label htmlFor="username" className="form-label">
-                        Nombre de usuario
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-floating mb-3">
-                      <input
-                        type="email"
-                        className="form-control"
-                        name="email"
-                        id="email"
-                        placeholder="name@example.com"
-                        required=""
-                      />
-                      <label htmlFor="email" className="form-label">
-                        Correo electrónico
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-floating mb-3">
-                      <input
-                        type="password"
-                        className="form-control"
-                        name="password"
-                        id="password"
-                        placeholder="Contraseña"
-                        required=""
-                      />
-                      <label htmlFor="password" className="form-label">
-                        Contraseña
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-floating mb-3">
-                      <input
-                        type="password"
-                        className="form-control"
-                        name="confirm_password"
-                        id="confirm_password"
-                        placeholder="Confirmar contraseña"
-                        required=""
-                      />
-                      <label htmlFor="confirm_password" className="form-label">
-                        Confirmar contraseña
-                      </label>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="mb-3">
-                      <label htmlFor="profile_photo" className="form-label">
-                        Foto de perfil
-                      </label>
-                      <input
-                        type="file"
-                        className="form-control"
-                        name="profile_photo"
-                        id="profile_photo"
-                        accept="image/*"
-                        required=""
-                      />
-                    </div>
-                    <div className="col-12">
-                      <div className="d-grid">
-                        <button className="btn btn-primary btn-lg" type="submit">
-                          Registrarse
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    id="error-message"
-                    name="error-message"
-                    style={{ color: "red" }}
-                  />
-                
-                  
-                </div>
-              </form>
+             
             </div>
           </div>
         </div>

@@ -1,8 +1,25 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route,  Routes, Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
+const userExist = Cookies.get('Username');
+const photo = Cookies.get('photo');
+const url = "http://localhost:3001/";
+console.log(userExist);
+console.log(url+photo);
+
+function logout () {
+Cookies.remove("Username");
+Cookies.remove("photo");
+window.location.reload();
+}
+
+// if(userExist ==undefined){
+//     alert("No hay usuario loggeado")
+// }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -25,13 +42,32 @@ const Navbar = () => {
               <Link className="nav-link" to="/Incoming">Proximos lanzamientos</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page">Acerca De</a>
+              <a className="nav-link" aria-current="page">Acerca De</a>
             </li>
+           
             <li className="nav-item">
-               <Link className="nav-link" to="/login">Login</Link>
+                {userExist ?  (
+                <>
+                <img className = "nav-link rounded-circle" alt="profilephoto" src={'http://localhost:3001/' + photo} />
+                <a className="nav-link">
+                  {userExist}
+                </a>
+                
+                </>
+              
+                ):
+                ( <Link className="nav-link" to="/Login">Login</Link>)
+                }
             </li>
+
             <li className="nav-item">
-               <Link className="nav-link" to="/Conexion">Pruebas</Link>
+
+            {userExist ?  (
+                 <a className="nav-link" aria-current="page" onClick ={logout}>Cerrar Sesión</a>
+                ):
+                (<p></p>)
+                }
+             
             </li>
           </ul>
           <form className="d-flex">

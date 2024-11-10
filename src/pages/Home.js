@@ -2,6 +2,8 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Landing from './img/Landing2.png';
 import Landing2 from './img/Landing1.png';
+import Landing3 from './img/Landing3.jpg';
+import Manga1 from './img/MierukoManga.webp'
 
 const Home = () => {
     return (
@@ -22,7 +24,7 @@ const Home = () => {
     */}
       </div>
       <div className="carousel-item">
-        <img src={Landing} className="d-block w-100" alt="Manga 2" />
+        <img src={Landing2} className="d-block w-100" alt="Manga 2" />
         {/* 
       <div class="carousel-caption d-none d-md-block">
           <h5>Manga 2</h5>
@@ -31,7 +33,7 @@ const Home = () => {
     */}
       </div>
       <div className="carousel-item">
-        <img src="img/Landing3.png" className="d-block w-100" alt="Manga 3" />
+        <img src={Landing3} className="d-block w-100" alt="Manga 3" />
         {/*
     <div class="carousel-caption d-none d-md-block">
         <h5>Manga 2</h5>
@@ -67,7 +69,7 @@ const Home = () => {
       <div className="col-md-4">
         <div className="card">
           <img
-            src="img/MierukoManga.webp"
+            src={Manga1}
             className="card-img-top"
             alt="Manga Critica"
           />
@@ -75,7 +77,7 @@ const Home = () => {
             <h5 className="card-title">Manga nuevo</h5>
             <p className="card-text">Mieruko ve fantasmas y así.</p>
             <a href="#" className="btn btn-primary">
-              Criticar
+              Leer
             </a>
           </div>
         </div>

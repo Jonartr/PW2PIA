@@ -3,7 +3,7 @@ import Axios from 'axios';
 
 const MyComponent = () => {
   const [data, setData] = useState(null);
-  const url = "http://localhost:3001/api/hola";
+  const url = "http://localhost:3001/api/users";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +17,9 @@ const MyComponent = () => {
           throw new Error('Network response was not ok');
         }
         else{
+          JSON.parse(info);
           setData(info);
+          console.log(info.username);
         }
 
 
@@ -36,7 +38,7 @@ const MyComponent = () => {
       </h2>
       <br />
       {data ? (
-        <p>{data.message}</p>
+        <p >{data}</p>
       ) : (
         <p>Loading data...</p>
       )}
