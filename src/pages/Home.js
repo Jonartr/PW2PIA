@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Landing from './img/Landing2.png';
-import Landing2 from './img/Landing1.png';
+import Landing2 from './img/MangaDDD.jpg';
 import Landing3 from './img/Landing3.jpg';
 import Manga1 from './img/MierukoManga.webp'
 
@@ -95,10 +95,10 @@ const Home = () => {
             src={Landing2}
             className="mr-3"
             alt="Manga critica"
-            width={64}
+            width={256}
           />
           <div className="media-body">
-            <h5 className="mt-0 mb-1">Dan Da Dan: 7</h5>
+            <h5 className="mt-0 mb-1">DanDaDan volumen#7</h5>
             El nuevo tomo de Dandadan me encantó, Momo ayase y Okarun siguen
             pareciendo geniales.{" "}
             <a href="#" className="text-primary">
@@ -142,8 +142,9 @@ const Home = () => {
             <p>
               "MangaCritics es mi lugar favorito para descubrir mangas nuevos,
               sus reseñas son de alta calidad."
+              Nicolas Maduro
             </p>
-            <footer className="blockquote-footer">Nicolas Maduro</footer>
+            <footer className="blockquote-footer"></footer>
           </blockquote>
         </div>
         {/* Más testimonios */}
