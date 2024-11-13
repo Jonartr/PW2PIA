@@ -1,8 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from '../img/Tomo1.jpg'
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 
 const Nuevo = () =>{
+
+  const userLogged = Cookies.get('Username');
+
+if (userLogged === undefined){
+  alert("Debe iniciar sesion antes de continuar");
+  window.location.replace('http://localhost:3000/login')
+}
+
 return(
 <>
   <div className="container">
@@ -20,7 +30,7 @@ return(
               alt="Logo Mangas UwU"
             />
             <h5 className="card-title">Mieruko Chan</h5>
-            <p className="card-text"><Link to = "/Viewer">Leer</Link></p>
+            <p className="card-text"><Link to = "/Selector">Leer</Link></p>
             <p className="card-text">Género: Terror, Comedia.</p>
             <p className="card-text">
               Descripción: Miko es una estudiante común, 

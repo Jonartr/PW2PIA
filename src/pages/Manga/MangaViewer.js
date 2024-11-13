@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
+import Cookies from 'js-cookie';
+
 
 const MangaViewer = () => {
+
+  const userLogged = Cookies.get('Username');
+
+  if (userLogged === undefined){
+    alert("Debe iniciar sesion antes de continuar");
+    window.location.replace('http://localhost:3000/login')
+  }
+  
+
   const [comments, setComments] = useState([]);
   const comicImages = [
     '../Mangaimg/1.jpg',

@@ -48,7 +48,7 @@ window.location.reload();
             <li className="nav-item">
                 {userExist ?  (
                 <>
-                <img className = "nav-link rounded-circle" alt="profilephoto" src={'http://localhost:3001/' + photo} />
+                {/* <img className = "nav-link rounded-circle" alt="profilephoto" src={'http://localhost:3001/' + photo} /> */}
                 <a className="nav-link">
                   {userExist}
                 </a>
