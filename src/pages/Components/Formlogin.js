@@ -9,12 +9,12 @@ const Formlogin = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-       //console.log(username + " " + password);
+        //console.log(username + " " + password);
         try {
             const response = await Axios.post(url, { username, password });
-          //  const user = JSON.stringify(response.data);
+            //  const user = JSON.stringify(response.data);
             setUsername(response.data.username);
-           // alert(response.data.username);
+            // alert(response.data.username);
             Cookies.set('Username', response.data.username);
             Cookies.set('photo', response.data.profilePhoto)
             window.location.replace('http://localhost:3000/');

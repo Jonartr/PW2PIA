@@ -12,22 +12,22 @@ const Formregister = () => {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-     //   console.log(username + " " + password + " " + email + " " + confirm_password);
-       console.log(profilePhoto);
+        //   console.log(username + " " + password + " " + email + " " + confirm_password);
+        console.log(profilePhoto);
 
-     const formData = new FormData();
-     
+        const formData = new FormData();
+
         formData.append('username', username);
         formData.append('password', password);
         formData.append('email', email);
         formData.append('confirm_password', confirm_password);
-        if (profilePhoto) { 
-            formData.append('profile_photo', profilePhoto); 
+        if (profilePhoto) {
+            formData.append('profile_photo', profilePhoto);
         }
 
         try {
-            const response = await Axios.post(url, formData,{
-                headers:{'Content-Type': 'multipart/form-data'}
+            const response = await Axios.post(url, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
             console.log(response)
             if (response.data.status) {

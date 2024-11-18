@@ -1,24 +1,24 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Route,  Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const Navbar = () => {
-const userExist = Cookies.get('Username');
-const photo = Cookies.get('photo');
-const url = "http://localhost:3001/";
-console.log(userExist);
-console.log(url+photo);
+  const userExist = Cookies.get('Username');
+  const photo = Cookies.get('photo');
+  const url = "http://localhost:3001/";
+  console.log(userExist);
+  console.log(url + photo);
 
-function logout () {
-Cookies.remove("Username");
-Cookies.remove("photo");
-window.location.reload();
-}
+  function logout() {
+    Cookies.remove("Username");
+    Cookies.remove("photo");
+    window.location.reload();
+  }
 
-// if(userExist ==undefined){
-//     alert("No hay usuario loggeado")
-// }
+  // if(userExist ==undefined){
+  //     alert("No hay usuario loggeado")
+  // }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -30,10 +30,10 @@ window.location.reload();
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-                <Link className="nav-link" to="/">Inicio</Link>
+              <Link className="nav-link" to="/">Inicio</Link>
             </li>
             <li className="nav-item">
-             <Link className="nav-link" to="/New">Nuevos</Link>
+              <Link className="nav-link" to="/New">Nuevos</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/Outstanding">Destacados</Link>
@@ -44,30 +44,30 @@ window.location.reload();
             <li className="nav-item">
               <a className="nav-link" aria-current="page">Acerca De</a>
             </li>
-           
+
             <li className="nav-item">
-                {userExist ?  (
+              {userExist ? (
                 <>
-                <img className = "nav-link rounded-circle" alt="profilephoto" src={'http://localhost:3001/' + photo} />
-                <a className="nav-link">
-                  {userExist}
-                </a>
-                
+                  <img className="nav-link rounded-circle" alt="profilephoto" src={'http://localhost:3001/' + photo} />
+                  <a className="nav-link">
+                    {userExist}
+                  </a>
+
                 </>
-              
-                ):
-                ( <Link className="nav-link" to="/Login">Login</Link>)
-                }
+
+              ) :
+                (<Link className="nav-link" to="/Login">Login</Link>)
+              }
             </li>
 
             <li className="nav-item">
 
-            {userExist ?  (
-                 <a className="nav-link" aria-current="page" onClick ={logout}>Cerrar Sesión</a>
-                ):
+              {userExist ? (
+                <a className="nav-link" aria-current="page" onClick={logout}>Cerrar Sesión</a>
+              ) :
                 (<p></p>)
-                }
-             
+              }
+
             </li>
           </ul>
           <form className="d-flex">
