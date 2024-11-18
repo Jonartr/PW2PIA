@@ -1,7 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from '../img/Tomo1.jpg'
+import Cookies from 'js-cookie';
 
 const Destacados = () =>{
+const userLogged = Cookies.get('Username');
+
+if (userLogged === undefined){
+  alert("Debe iniciar sesion antes de continuar");
+  window.location.replace('http://localhost:3000/login')
+}
+
+
+
 return(
 <>
   <div className="container">

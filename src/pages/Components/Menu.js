@@ -48,11 +48,11 @@ const Navbar = () => {
             <li className="nav-item">
               {userExist ? (
                 <>
-                  <img className="nav-link rounded-circle" alt="profilephoto" src={'http://localhost:3001/' + photo} />
-                  <a className="nav-link">
-                    {userExist}
-                  </a>
-
+                {/* <img className = "nav-link rounded-circle" alt="profilephoto" src={'http://localhost:3001/' + photo} /> */}
+                <a className="nav-link">
+                  {userExist}
+                </a>
+                
                 </>
 
               ) :
