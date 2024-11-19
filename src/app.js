@@ -31,8 +31,8 @@ return (
     <Route path="/New" element = {<Nuevo/>}/>
     <Route path="/Outstanding" element = {<Destacados/>}/>
     <Route path="/Incoming" element = {<Incoming/>}/>
-    <Route path="/Viewer" element = {<MangaViewer/>}/>
-    <Route path="/Selector" element = {<SelectorChapter/>}/>
+    <Route path="/Viewer/:chapterId" element = {<MangaViewer/>}/>
+    <Route path="/Selector/:mangaId" element = {<SelectorChapter/>}/>
 
   </Routes>
 </Router>

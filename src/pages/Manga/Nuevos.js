@@ -30,7 +30,7 @@ return(
               alt="Logo Mangas UwU"
             />
             <h5 className="card-title">Mieruko Chan</h5>
-            <p className="card-text"><Link to = "/Selector">Leer</Link></p>
+            <button type="button" class="btn btn-primary"> <p className="card-text"><Link to = "/Selector" style={{ color: 'white' }} >Leer</Link></p></button>
             <p className="card-text">Género: Terror, Comedia.</p>
             <p className="card-text">
               Descripción: Miko es una estudiante común, 

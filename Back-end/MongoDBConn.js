@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use('./Back-end/images', express.static('./Back-end/images'));
+
 mongoose.connect('mongodb://localhost:27017/PW2', {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -44,10 +45,36 @@ const UserSchema = new mongoose.Schema({
   profilePhoto: { type: String, default: null },
 });
 
+// Modelo de comentarios
+const CommentsSchema = new mongoose.Schema({
+  idcomment: { type: Number, required: true, unique: true },
+  iduser: { type: String, required: true },
+  idmanga: { type: Number, required: true },
+  message: { type: String, required: true},
+  date:{type: Date, required: true }
+});
+
 const User = mongoose.model('Si', UserSchema);
+
+const Comments = mongoose.model('Comments', CommentsSchema);
 
 app.get('/', async (req, res) => {
 
+
+})
+
+app.get('/Comment', async (req, res) => {
+  const idcomment = 4;
+  const iduser = "Jonatr";
+  const idmanga = 1
+  const date = Date.now();
+  const message = 'Hola';
+
+  const newComment = new Comments ({  idcomment: idcomment, iduser: iduser, idmanga: idmanga, message: message, date: date});
+  console.log(newComment);
+  await newComment.save();
+  return res.status(201).json({ message: 'Comentario realizado', status: true });
+  
 
 })
 

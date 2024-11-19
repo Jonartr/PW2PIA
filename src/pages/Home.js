@@ -1,48 +1,102 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Landing from './img/Landing2.png';
 import Landing2 from './img/MangaDDD.jpg';
 import Landing3 from './img/Landing3.jpg';
 import Manga1 from './img/MierukoManga.webp'
 
 const Home = () => {
+
+  const [mangas, setMangas] = useState([]);
+  const [covers, setCovers] = useState([]);
+
+
+  useEffect(() => {
+
+    axios.get('https://api.mangadex.org/manga')
+      .then(response => {
+        const mangasData = response.data.data;
+        setMangas(mangasData);
+
+        const coverRequests = mangasData.map(manga =>
+          axios.get(`https://api.mangadex.org/cover?manga[]=${manga.id}`)
+        );
+
+        return Promise.all(coverRequests);
+      })
+      .then(responses => {
+        const coversData = responses.flatMap(response => response.data.data);
+        setCovers(coversData);
+      })
+      .catch(error => {
+        console.error('Error fetching mangas or covers:', error);
+      });
+  }, []);
+
+  const getCoverImageUrl = (cover) => {
+    if (!cover?.attributes?.fileName || !cover.relationships[0]?.id) return '';
+    return `https://uploads.mangadex.org/covers/${cover.relationships[0].id}/${cover.attributes.fileName}`;
+  };
+
+  const MangaFirst = mangas[0];
+  const MangaSecond = mangas[1];
+  const allManga = mangas;
+  console.log (MangaSecond);
+
+  const firstCover = covers[0];
+  const firstCoverImageUrl = firstCover ? getCoverImageUrl(firstCover) : '';
+  const firstManga = firstCover ? mangas.find(manga => manga.id === firstCover.relationships[0].id) : null;
+  const firstMangaTitle = firstManga?.attributes?.title?.en ?? 'Título desconocido';
+
+
+  /*  */
+
+  const secondCover = covers[10];
+  const secondCoverImageUrl = secondCover ? getCoverImageUrl(secondCover) : '';
+  const secondManga = secondCover ? mangas.find(manga => manga.id === secondCover.relationships[0].id) : null;
+  const secondMangaTitle = secondManga?.attributes?.title?.en ?? 'Título desconocido';
+
+
+
+  console.log(firstCoverImageUrl);
+  console.log(secondCoverImageUrl);
+
+
   return (
     <>
+      {/* {console.log(mangas[0])} {covers[0] ? (console.log(covers[0])):(console.log("no carga"))} */}
       <div
         id="carouselMangasPopulares"
         className="carousel slide"
         data-bs-ride="carousel"
       >
         <div className="carousel-inner">
-          <div className="carousel-item active">
-            <img src={Landing} className="d-block w-100" alt="Manga 1" />
-            {/*
-      <div class="carousel-caption d-none d-md-block">
-          <h5>Manga 1</h5>
-          <p>Una descripción breve o enlace a la crítica</p>
-      </div>
-    */}
-          </div>
-          <div className="carousel-item">
-            <img src={Landing2} className="d-block w-100" alt="Manga 2" />
-            {/* 
-      <div class="carousel-caption d-none d-md-block">
-          <h5>Manga 2</h5>
-          <p>Una descripción breve o enlace a la crítica</p>
-      </div>
-    */}
-          </div>
-          <div className="carousel-item">
-            <img src={Landing3} className="d-block w-100" alt="Manga 3" />
-            {/*
-    <div class="carousel-caption d-none d-md-block">
-        <h5>Manga 2</h5>
-        <p>Una descripción breve o enlace a la crítica</p>
-    </div>
-  */}
-          </div>
-          {/* Más mangas */}
+          {covers.slice(0, 6).map((cover, index) => {
+            //console.log('Cover:', cover); // Imprime los datos del cover para verificar
+            const imageUrl = cover?.attributes?.fileName
+              ? `https://uploads.mangadex.org/covers/${cover.relationships[0].id}/${cover.attributes.fileName}`
+              : ''; // Ajusta según la estructura del objeto cover
+            return (
+              <div key={cover.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
+                {imageUrl && (
+                  <img
+                    src={imageUrl}
+                    className="d-block w-50"
+                    alt={`Cover of ${cover.attributes.manga_title}`}
+                  />
+                )}
+                {!imageUrl && (
+                  <p>No cover image available</p> // Mensaje en caso de que no haya imagen
+                )}
+              </div>
+            );
+          })}
         </div>
+
+
+
         <button
           className="carousel-control-prev"
           type="button"
@@ -66,25 +120,54 @@ const Home = () => {
       <div className="container mt-5">
         <h2 className="text-center mb-4">Mangas Destacados</h2>
         <div className="row">
-          <div className="col-md-4">
-            <div className="card">
-              <img
-                src={Manga1}
-                className="card-img-top"
-                alt="Manga Critica"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Manga nuevo</h5>
-                <p className="card-text">Mieruko ve fantasmas y así.</p>
-                <a href="#" className="btn btn-primary">
-                  Leer
-                </a>
+          {firstCover && (
+            <div className="col-md-4">
+              <div className="card">
+                {firstCoverImageUrl? (
+                  <img
+                    src={firstCoverImageUrl}
+                    className="card-img-top"
+                    alt={`Cover of ${firstMangaTitle}`}
+                  />
+                ) : (
+                  <p>No cover image available</p> // Mensaje en caso de que no haya imagen
+                )}
+                <div className="card-body">
+                  <h5 className="card-title">{firstMangaTitle}</h5>
+                  <p className="card-text">{MangaFirst.attributes.description.en || 'No hay descripción disponible.'}</p>
+                  <Link to={`/Selector/${firstCover.relationships[0].id}`} className="btn btn-primary"> Leer </Link>
+                </div>
               </div>
             </div>
-          </div>
-          {/* Más mangas en tarjetas */}
+          )}
+        </div>
+
+        <div className="row">
+          {secondCover && (
+            <div className="col-md-4">
+              <div className="card">
+                {secondCoverImageUrl ? (
+                  <img
+                    src={secondCoverImageUrl}
+                    className="card-img-top"
+                    alt={`Cover of ${secondMangaTitle}`}
+                  />
+                ) : (
+                  <p>No cover image available</p> // Mensaje en caso de que no haya imagen
+                )}
+                <div className="card-body">
+                  <h5 className="card-title">{secondMangaTitle}</h5>
+                  <p className="card-text">{MangaSecond.attributes.description.en || 'No hay descripción disponible.'}</p>
+                  <a href="#" className="btn btn-primary">Leer</a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
+
+
+
       {/*Sección Lo Último de las obras publicadas*/}
       <section className="bg-dark text-white p-5 mt-5">
         <div className="container">
