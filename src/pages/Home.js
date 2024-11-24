@@ -43,15 +43,13 @@ const Home = () => {
   const MangaFirst = mangas[0];
   const MangaSecond = mangas[1];
   const allManga = mangas;
-  console.log (MangaSecond);
+  console.log(MangaSecond);
 
   const firstCover = covers[0];
   const firstCoverImageUrl = firstCover ? getCoverImageUrl(firstCover) : '';
   const firstManga = firstCover ? mangas.find(manga => manga.id === firstCover.relationships[0].id) : null;
   const firstMangaTitle = firstManga?.attributes?.title?.en ?? 'Título desconocido';
 
-
-  /*  */
 
   const secondCover = covers[10];
   const secondCoverImageUrl = secondCover ? getCoverImageUrl(secondCover) : '';
@@ -73,30 +71,35 @@ const Home = () => {
         data-bs-ride="carousel"
       >
         <div className="carousel-inner">
-          {covers.slice(0, 6).map((cover, index) => {
-            //console.log('Cover:', cover); // Imprime los datos del cover para verificar
-            const imageUrl = cover?.attributes?.fileName
-              ? `https://uploads.mangadex.org/covers/${cover.relationships[0].id}/${cover.attributes.fileName}`
-              : ''; // Ajusta según la estructura del objeto cover
-            return (
-              <div key={cover.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
-                {imageUrl && (
-                  <img
-                    src={imageUrl}
-                    className="d-block w-50"
-                    alt={`Cover of ${cover.attributes.manga_title}`}
-                  />
-                )}
-                {!imageUrl && (
-                  <p>No cover image available</p> // Mensaje en caso de que no haya imagen
-                )}
-              </div>
-            );
-          })}
+          <div className="carousel-item active">
+            <img src={Landing} className="d-block w-100" alt="Manga 1" />
+            {/*
+      <div class="carousel-caption d-none d-md-block">
+          <h5>Manga 1</h5>
+          <p>Una descripción breve o enlace a la crítica</p>
+      </div>
+    */}
+          </div>
+          <div className="carousel-item">
+            <img src={Landing2} className="d-block w-100" alt="Manga 2" />
+            {/* 
+      <div class="carousel-caption d-none d-md-block">
+          <h5>Manga 2</h5>
+          <p>Una descripción breve o enlace a la crítica</p>
+      </div>
+    */}
+          </div>
+          <div className="carousel-item">
+            <img src={Landing3} className="d-block w-100" alt="Manga 3" />
+            {/*
+    <div class="carousel-caption d-none d-md-block">
+        <h5>Manga 2</h5>
+        <p>Una descripción breve o enlace a la crítica</p>
+    </div>
+  */}
+          </div>
+          {/* Más mangas */}
         </div>
-
-
-
         <button
           className="carousel-control-prev"
           type="button"
@@ -119,11 +122,11 @@ const Home = () => {
       {/*Sección mangas destacados*/}
       <div className="container mt-5">
         <h2 className="text-center mb-4">Mangas Destacados</h2>
-        <div className="row">
+        <div className="row col">
           {firstCover && (
             <div className="col-md-4">
               <div className="card">
-                {firstCoverImageUrl? (
+                {firstCoverImageUrl ? (
                   <img
                     src={firstCoverImageUrl}
                     className="card-img-top"
@@ -158,7 +161,7 @@ const Home = () => {
                 <div className="card-body">
                   <h5 className="card-title">{secondMangaTitle}</h5>
                   <p className="card-text">{MangaSecond.attributes.description.en || 'No hay descripción disponible.'}</p>
-                  <a href="#" className="btn btn-primary">Leer</a>
+                  <Link to={`/Selector/${secondCover.relationships[0].id}`} className="btn btn-primary"> Leer </Link>
                 </div>
               </div>
             </div>
@@ -194,27 +197,31 @@ const Home = () => {
         </div>
       </section>
       {/*Sección de géneros*/}
+      
+
       <section className="text-center p-5">
         <h2>Explora por Géneros</h2>
         <div className="btn-group" role="group">
-          <a href="#" className="btn btn-secondary">
-            Shonen
-          </a>
-          <a href="#" className="btn btn-secondary">
-            Shojo
-          </a>
-          <a href="#" className="btn btn-secondary">
-            Seinen
-          </a>
-          <a href="#" className="btn btn-secondary">
-            Furry
-          </a>
-          <a href="#" className="btn btn-secondary">
-            BL/GL
-          </a>
+          <Link to="/ByGenre?genre=Action" className="btn btn-secondary">
+            Acción
+          </Link>
+          <Link to="/ByGenre?genre=Romance" className="btn btn-secondary">
+            Romance
+          </Link>
+          <Link to="/ByGenre?genre=Slice of Life" className="btn btn-secondary">
+            Slice of Life
+          </Link>
+          <Link to="/ByGenre?genre=Thriller" className="btn btn-secondary">
+          Thriller
+          </Link>
+          <Link to="/ByGenre?genre=Sports" className="btn btn-secondary">
+            Deportes
+          </Link>
           {/* Más géneros */}
         </div>
       </section>
+
+
       {/*Reseñas de usuarios*/}
       <section className="p-5 bg-light">
         <div className="container">

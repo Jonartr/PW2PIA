@@ -16,6 +16,8 @@ import Destacados from './pages/Manga/Destacados';
 import Incoming from './pages/Manga/Incoming';
 import MangaViewer from './pages/Manga/MangaViewer';
 import SelectorChapter from './pages/Manga/ChapterSelector';
+import ByGenre from './pages/Components/SearchByGenre';
+import ByName from './pages/Components/SearchByName';
 
 function App() {
 return (
@@ -33,6 +35,8 @@ return (
     <Route path="/Incoming" element = {<Incoming/>}/>
     <Route path="/Viewer/:chapterId" element = {<MangaViewer/>}/>
     <Route path="/Selector/:mangaId" element = {<SelectorChapter/>}/>
+    <Route path="/ByGenre" element = {<ByGenre/>}/>
+    <Route path="/ByName" element = {<ByName/>}/>
 
   </Routes>
 </Router>

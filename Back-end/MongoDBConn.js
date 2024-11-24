@@ -6,9 +6,12 @@ const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
 
+
+//MODELOS
+const Comments = require('./Models/Comments');
+
 const app = express();
 const PORT = 3001;
-
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -46,38 +49,48 @@ const UserSchema = new mongoose.Schema({
 });
 
 // Modelo de comentarios
-const CommentsSchema = new mongoose.Schema({
-  idcomment: { type: Number, required: true, unique: true },
-  iduser: { type: String, required: true },
-  idmanga: { type: Number, required: true },
-  message: { type: String, required: true},
-  date:{type: Date, required: true }
-});
 
 const User = mongoose.model('Si', UserSchema);
 
-const Comments = mongoose.model('Comments', CommentsSchema);
 
-app.get('/', async (req, res) => {
+
+app.post('/Comment', async (req, res) => {
+  const { nombre, comentario, idmanga } = req.body;
+  const idcomment = await Comments.countDocuments() + 1;
+  const date = Date.now();
+
+  const newComment = new Comments({
+    idcomment: idcomment,
+    iduser: nombre,
+    idmanga: idmanga,
+    message: comentario,
+    date: date
+  });
+
+  try {
+    await newComment.save();
+    return res.status(201).json({ message: 'Comentario realizado', status: true });
+  } catch (error) {
+    console.error('Error guardando el comentario:', error);
+    return res.status(500).json({ message: 'Error guardando el comentario', status: false });
+  }
+
 
 
 })
 
 app.get('/Comment', async (req, res) => {
-  const idcomment = 4;
-  const iduser = "Jonatr";
-  const idmanga = 1
-  const date = Date.now();
-  const message = 'Hola';
 
-  const newComment = new Comments ({  idcomment: idcomment, iduser: iduser, idmanga: idmanga, message: message, date: date});
-  console.log(newComment);
-  await newComment.save();
-  return res.status(201).json({ message: 'Comentario realizado', status: true });
-  
+  const { idmanga, order } = req.query;
+  try {
+    const comments = await Comments.find({ idmanga: idmanga }).sort({ date: order === 'asc' ? 1 : -1 });
+    return res.status(200).json(comments);
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    return res.status(500).json({ message: 'Error fetching comments', status: false });
+  }
 
 })
-
 
 app.post('/register', upload.single('profile_photo'), async (req, res) => {
   const { username, email, password, confirm_password } = req.body;

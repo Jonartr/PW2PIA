@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link ,useNavigate} from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const Navbar = () => {
@@ -15,6 +15,15 @@ const Navbar = () => {
     Cookies.remove("photo");
     window.location.reload();
   }
+
+  const navigate = useNavigate();
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const query = e.target.search.value;
+    navigate(`/ByName?name=${query}`);
+  };
+
 
   // if(userExist ==undefined){
   //     alert("No hay usuario loggeado")
@@ -48,11 +57,11 @@ const Navbar = () => {
             <li className="nav-item">
               {userExist ? (
                 <>
-                {/* <img className = "nav-link rounded-circle" alt="profilephoto" src={'http://localhost:3001/' + photo} /> */}
-                <a className="nav-link">
-                  {userExist}
-                </a>
-                
+                  {/* <img className = "nav-link rounded-circle" alt="profilephoto" src={'http://localhost:3001/' + photo} /> */}
+                  <a className="nav-link">
+                    {userExist}
+                  </a>
+
                 </>
 
               ) :
@@ -70,10 +79,11 @@ const Navbar = () => {
 
             </li>
           </ul>
-          <form className="d-flex">
-            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+          <form className="d-flex" onSubmit={handleSearch}>
+            <input className="form-control me-2" type="search" name="search" placeholder="Buscar" aria-label="Buscar" />
             <button className="btn btn-outline-success" type="submit">Buscar</button>
           </form>
+
         </div>
       </div>
     </nav>

@@ -31,9 +31,11 @@ const Formregister = () => {
             });
             console.log(response)
             if (response.data.status) {
+                alert("Registrado con exito");
                 console.log(response.data.message);
             } else {
                 console.log(response.data.message);
+                alert("Error al registrar");
             }
         } catch (error) {
             console.error('Error al registrar:', error);
