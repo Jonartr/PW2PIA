@@ -5,10 +5,12 @@ const cors = require("cors")
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
+const axios = require ('axios');
 
 
 //MODELOS
 const Comments = require('./Models/Comments');
+const User = require('./Models/Users');
 
 const app = express();
 const PORT = 3001;
@@ -40,22 +42,12 @@ mongoose.connect('mongodb://localhost:27017/PW2', {
   console.error('Error al conectar a la base de datos', err);
 });
 
-// Modelo de Usuario
-const UserSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
-  profilePhoto: { type: String, default: null },
-});
-
-// Modelo de comentarios
-
-const User = mongoose.model('Si', UserSchema);
 
 
 
+//======================APARTADO DE REFERENTE A COMENTARIOS =============================//
 app.post('/Comment', async (req, res) => {
-  const { nombre, comentario, idmanga } = req.body;
+  const { nombre, comentario,rating, idmanga } = req.body;
   const idcomment = await Comments.countDocuments() + 1;
   const date = Date.now();
 
@@ -64,6 +56,7 @@ app.post('/Comment', async (req, res) => {
     iduser: nombre,
     idmanga: idmanga,
     message: comentario,
+    rating: rating,
     date: date
   });
 
@@ -92,6 +85,29 @@ app.get('/Comment', async (req, res) => {
 
 })
 
+
+app.get('/latestComment', async (req, res) => {
+  try {
+    const comments = await Comments.find().sort({ date: -1 }).limit(3);
+    const mangaDetailsPromises = comments.map(async (comment) => {
+      const mangaResponse = await axios.get(`https://api.mangadex.org/manga/${comment.idmanga}`);
+      const mangaTitle = mangaResponse.data.data.attributes.title.en || mangaResponse.data.data.attributes.title.jp || 'Título desconocido';
+      return {
+        ...comment._doc,
+        mangaTitle
+      };
+    });
+    const commentsWithMangaTitles = await Promise.all(mangaDetailsPromises);
+    return res.status(200).json(commentsWithMangaTitles);
+  } catch (error) {
+    console.error('Error fetching latest comments:', error);
+    return res.status(500).json({ message: 'Error fetching latest comments', status: false });
+  }
+});
+
+
+
+//======================APARTADO DE REFERENTE A USUARIOS =============================//
 app.post('/register', upload.single('profile_photo'), async (req, res) => {
   const { username, email, password, confirm_password } = req.body;
   const existingUser = await User.findOne({ username });
@@ -103,7 +119,6 @@ app.post('/register', upload.single('profile_photo'), async (req, res) => {
 
     if (usernameRegex.test(username)) {
       if (passwordRegex.test(password) && password === confirm_password) {
-        //  const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({ username, email, password: password, profilePhoto: req.file ? `Back-end/images/${req.file.filename}` : null });
         console.log(newUser);
         await newUser.save();
@@ -123,20 +138,6 @@ app.post('/register', upload.single('profile_photo'), async (req, res) => {
   }
 });
 
-
-app.get('/api/users', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.send(users);
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    res.status(500).send('Error fetching users');
-  }
-});
-
-app.get('/api/users/hola', async (req, res) => {
-  res.json({ message: 'Hola Mundo' });
-})
 
 app.post('/users', async (req, res) => {
   const { username, password } = req.body;

@@ -7,10 +7,13 @@ const SelectorChapter = () => {
   const [chapters, setChapters] = useState([]);
   const [comments, setComments] = useState([]);
   const [order, setOrder] = useState('asc'); // 'asc' para más antiguo primero, 'desc' para más nuevo primero
+  const [languages, setLanguages] = useState([]);
+  const [selectedLanguage, setSelectedLanguage] = useState('');
   const { mangaId } = useParams();
   const userLogged = Cookies.get('Username');
   const [nombre, setNombre] = useState('');
   const [comentario, setComentario] = useState('');
+  const [rating, setRating] = useState(1); // Valor por defecto
 
   if (userLogged === undefined) {
     alert("Debe iniciar sesión antes de continuar");
@@ -18,17 +21,27 @@ const SelectorChapter = () => {
   }
 
   useEffect(() => {
+    fetchChapters();
+    fetchComments(order);
+  }, [mangaId, order, selectedLanguage]);
+
+  const fetchChapters = () => {
     axios.get(`https://api.mangadex.org/chapter?manga=${mangaId}`)
       .then(response => {
         const chaptersData = response.data.data;
         setChapters(chaptersData);
+        fetchLanguages(chaptersData);
       })
       .catch(error => {
         console.error('Error fetching chapters:', error);
       });
+  };
 
-    fetchComments(order);
-  }, [mangaId, order]);
+  const fetchLanguages = (chaptersData) => {
+    const languagesData = chaptersData.map(chapter => chapter.attributes.translatedLanguage);
+    const uniqueLanguages = [...new Set(languagesData)];
+    setLanguages(uniqueLanguages);
+  };
 
   const fetchComments = async (order) => {
     try {
@@ -45,6 +58,7 @@ const SelectorChapter = () => {
       const response = await axios.post('http://localhost:3001/Comment', {
         nombre: userLogged,
         comentario: comentario,
+        rating: rating,
         idmanga: mangaId
       });
       if (response.data.status) {
@@ -64,16 +78,32 @@ const SelectorChapter = () => {
     <>
       <div className="container mt-5">
         <h1 className="mb-4">Seleccionar Capítulo</h1>
+        <div className="mb-4">
+          <label htmlFor="languageSelect">Seleccionar Idioma:</label>
+          <select
+            id="languageSelect"
+            className="form-control"
+            value={selectedLanguage}
+            onChange={(e) => setSelectedLanguage(e.target.value)}
+          >
+            <option value="">Todos los Idiomas</option>
+            {languages.map(lang => (
+              <option key={lang} value={lang}>{lang}</option>
+            ))}
+          </select>
+        </div>
         <div className="list-group mb-4">
-          {chapters.map(chapter => (
-            <Link 
-              key={chapter.id} 
-              to={`/Viewer/${chapter.id}`} 
-              className="list-group-item list-group-item-action"
-            >
-              {chapter.attributes.title || `Capítulo ${chapter.attributes.chapter}`}
-            </Link>
-          ))}
+          {chapters
+            .filter(chapter => selectedLanguage === '' || chapter.attributes.translatedLanguage === selectedLanguage)
+            .map(chapter => (
+              <Link 
+                key={chapter.id} 
+                to={`/Viewer/${chapter.id}`} 
+                className="list-group-item list-group-item-action"
+              >
+                {chapter.attributes.title || `Capítulo ${chapter.attributes.chapter}`}
+              </Link>
+            ))}
         </div>
         <h2 className="mb-4">Comentarios</h2>
         <button className="btn btn-secondary mb-4" onClick={toggleOrder}>
@@ -85,13 +115,13 @@ const SelectorChapter = () => {
               <h5>{comment.iduser}</h5>
               <p>{comment.message}</p>
               <small>{new Date(comment.date).toLocaleString()}</small>
+              <p>Calificación: {comment.rating}</p>
             </div>
           ))}
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <h2 htmlFor="nombreUsuario">{userLogged}</h2>
-           
           </div>
           <div className="form-group">
             <label htmlFor="comentarioUsuario">Comentario</label>
@@ -103,6 +133,21 @@ const SelectorChapter = () => {
               value={comentario}
               onChange={(e) => setComentario(e.target.value)}
             />
+          </div>
+          <div className="form-group">
+            <label htmlFor="rating">Calificación</label>
+            <select
+              className="form-control"
+              id="rating"
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+            </select>
           </div>
           <button type="submit" className="btn btn-primary">
             Enviar

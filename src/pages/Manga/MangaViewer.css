@@ -1,0 +1,31 @@
+.comic-cascade {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .comic-card {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .comic-image {
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: contain;
+  }
+  
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .navigation-buttons .btn {
+    width: 45%;
+  }
+  
